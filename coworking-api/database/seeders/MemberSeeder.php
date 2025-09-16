@@ -12,6 +12,6 @@ class MemberSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        
     }
 }
