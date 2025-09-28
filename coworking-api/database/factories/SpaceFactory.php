@@ -17,7 +17,8 @@ class SpaceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name'    => fake()->company() . ' Space',
+            'address' => fake()->address(),
         ];
     }
 }

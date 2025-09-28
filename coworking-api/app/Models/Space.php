@@ -12,10 +12,12 @@ class Space extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
-        'name',
-        'address'
+    'name',
+    'address',
+    'description',
     ];
+
+
 
     public function Room() {
         return $this->hasMany(Room::class);

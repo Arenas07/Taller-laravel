@@ -9,15 +9,12 @@ use App\Models\amenity_room;
 
 class Amenity extends Model
 {
-    /** @use HasFactory<\Database\Factories\AmenityFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'id',
-        'name', 
-    ];
+    protected $fillable = ['name'];
 
-    public function Room() {
-        return $this->belongsToMany(Room::class)->using(amenity_room::class)->withTimestamps;
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class)->using(amenity_room::class)->withTimestamps();
     }
 }
