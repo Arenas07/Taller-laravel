@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Payment;
+use App\Models\Invoice;
+use Illuminate\Support\Str;
 
 class InvoiceController extends Controller
 {
@@ -19,7 +22,31 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'payment_id' => 'required|exists:payments,id',
+            'meta' => 'nullable|array',
+        ]);
+
+        $payment = Payment::findOrFail($validated['payment_id']);
+        if ($payment->status !== 'paid') {
+            return response()->json([
+                'message' => 'No se puede emitir factura, el pago no está confirmado.'
+            ], 422);
+        }
+
+        $invoiceNumber = 'INV-' . strtoupper(Str::random(8));
+
+        $invoice = Invoice::create([
+            'payment_id' => $validated['payment_id'],
+            'number' => $invoiceNumber,
+            'issued_date' => now()->toDateString(),
+           'meta' => json_encode($request->meta),
+        ]);
+
+        return response()->json([
+            'message' => 'Factura emitida con éxito',
+            'invoice' => $invoice
+        ], 201);
     }
 
     /**

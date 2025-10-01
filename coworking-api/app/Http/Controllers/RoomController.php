@@ -12,10 +12,20 @@ class RoomController extends Controller
     /**
      * Listar todas las salas
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Cargar también las amenities relacionadas
-        return Room::with('amenities')->get();
+        $query = Room::query();
+
+        if ($request->has('space_id')) {
+            $query->where('space_id', $request->get('space_id'));
+        }
+
+        $rooms = $query->get();
+
+        return response()->json([
+            'message' => 'Filtrado de rooms exitoso',
+            'data'    => $rooms
+        ]);
     }
 
     /**
@@ -77,7 +87,10 @@ class RoomController extends Controller
     public function attachAmenity(Room $room, Amenity $amenity)
     {
         $room->amenities()->syncWithoutDetaching([$amenity->id]);
-        return response()->json(['message' => 'Amenity attached successfully']);
+        return response()->json([
+            'message' => 'Exitoso',
+            'data' => $room->amenities
+        ]);
     }
 
     /**
@@ -86,6 +99,6 @@ class RoomController extends Controller
     public function detachAmenity(Room $room, Amenity $amenity)
     {
         $room->amenities()->detach($amenity->id);
-        return response()->json(['message' => 'Amenity detached successfully']);
+        return response()->json(['message' => 'Exitoso desatach']);
     }
 }

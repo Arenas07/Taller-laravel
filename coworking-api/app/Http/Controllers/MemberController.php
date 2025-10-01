@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Member;
 
 class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $member = Member::with(['Bookings.Room'])->findOrFail($id);
+
+        return response()->json([
+            'member' => $member->id,
+            'bookings' => $member->Bookings
+        ]);
     }
 
     /**

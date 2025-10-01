@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Payment;
+use App\Http\Requests\StorePaymentRequest;
 
 class PaymentController extends Controller
 {
@@ -17,9 +19,14 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePaymentRequest $request)
     {
-        //
+        $payment = Payment::create($request->validated());
+
+        return response()->json([
+            'message' => 'Payment registrado',
+            'data'    => $payment
+        ], 201);
     }
 
     /**
