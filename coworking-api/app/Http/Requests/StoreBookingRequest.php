@@ -13,7 +13,7 @@ class StoreBookingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,11 +24,11 @@ class StoreBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'member_id' => ['required','exists:members,id'],
-            'room_id'   => ['required','exists:rooms,id'],
-            'start_at'  => ['required','date','after_or_equal:now'],
-            'end_at'    => ['required','date','after:start_at'],
-            'purpose'   => ['nullable','string','max:160'],
+            'member_id' => ['required', 'exists:members,id'],
+            'room_id'   => ['required', 'exists:rooms,id'],
+            'start_at'  => ['required', 'date', 'after_or_equal:now'],
+            'end_at'    => ['required', 'date', 'after:start_at'],
+            'purpose'   => ['nullable', 'string', 'max:160'],
 
         ];
     }

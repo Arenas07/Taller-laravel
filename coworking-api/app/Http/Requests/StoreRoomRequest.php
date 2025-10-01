@@ -22,11 +22,11 @@ class StoreRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'space_id'  => ['required','exists:spaces,id'],
-            'name'      => ['required','string','min:3','max:120','unique:rooms,name'],
-            'capacity'  => ['required','integer','min:1','max:200'],
-            'type'      => ['required','in:meeting,workshop,phonebooth,auditorium'],
-            'is_active' => ['boolean'],
+            'space_id'  => 'required|exists:spaces,id',
+            'name'      => 'required|string|max:120',
+            'capacity'  => 'required|integer|min:1',
+            'type'      => 'required|in:meeting,workshop,phonebooth,auditorium',
+            'is_active' => 'boolean',
         ];
     }
 }
