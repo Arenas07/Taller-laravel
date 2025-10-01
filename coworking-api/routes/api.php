@@ -12,15 +12,12 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InvoiceController;
 
 Route::apiResources([
-  'plans'     => PlanController::class,
   'spaces'    => SpaceController::class,
   'rooms'     => RoomController::class,
-  'amenities' => AmenityController::class,
-  'members'   => MemberController::class,
   'bookings'  => BookingController::class,
   'payments'  => PaymentController::class,
   'invoices'  => InvoiceController::class,
 ]);
 
+Route::get('/members/{id}/bookings', [MemberController::class, 'index']);
 Route::post('rooms/{room}/amenities/{amenity}', [RoomController::class,'attachAmenity']);
-Route::delete('rooms/{room}/amenities/{amenity}', [RoomController::class,'detachAmenity']);
