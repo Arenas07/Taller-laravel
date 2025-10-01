@@ -12,7 +12,6 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
         'booking_id',
         'method',
         'amount',

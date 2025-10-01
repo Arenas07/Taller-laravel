@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Plan;
+use App\Models\Booking;
 
 class Member extends Model
 {
@@ -13,7 +14,6 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
         'user_id',
         'plan_id',
         'company',
@@ -26,5 +26,10 @@ class Member extends Model
 
     public function Plan(){
         return $this->belongsTo(Plan::class);
+    }
+
+    public function Bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

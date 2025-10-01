@@ -12,13 +12,17 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
         'payment_id',
         'number',
         'issued_date',
         'meta',
          
     ];
+
+    protected $casts = [
+    'meta' => 'array',
+    ];
+
 
     public function Payment(){
         return $this->belongsTo(Payment::class);
